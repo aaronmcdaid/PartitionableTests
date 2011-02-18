@@ -23,11 +23,22 @@ struct RandomCommunityAssignment {
 	double commsPerNodeAvg() const {
 		return double(S*C)/double(N);
 	}
+	int numOrphanNodes() const {
+		int numOrphans = 0;
+		for(int n=0; n< this->N; n++) {
+			if(this->nodeToCommunitiesMap.at(n).size()==0)
+				numOrphans++;
+		}
+		return numOrphans;
+	}
 };
 
 void doExperiments(const int N, const int S, const int C) {
 	const RandomCommunityAssignment rca(N,S,C);
 	PP(rca.commsPerNodeAvg());
+	PP(rca.numOrphanNodes());
+	cout << endl;
+
 }
 
 struct UsageMessage{};
