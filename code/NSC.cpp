@@ -108,11 +108,21 @@ void doExperiments(const int N, const int S, const int C, const int iterations) 
 	}
 }
 
-struct UsageMessage{};
+struct UsageMessage : public std::exception {
+	virtual const char* what() const throw() {
+		return "Usage: NSC n s c iterations\n"
+		  "\tn\t\tnumber of nodes"        "\n"
+		  "\ts\t\tsize of each community"        "\n"
+		  "\tc\t\tnumber of communities"        "\n"
+		  "\titerations\tnumber of realizations of the NSC model to create"        "\n"
+		;
+	}
+};
 
 int main(int argc, char **argv) {
 	unless(argc==5) {
-		throw UsageMessage();
+		cout << UsageMessage().what();
+		exit(1);
 	}
 	const int N = atoi(argv[1]);
 	const int S = atoi(argv[2]);
