@@ -1,2 +1,2 @@
 clean:
-	rm NSC *.o
+	-rm NSC *.o
