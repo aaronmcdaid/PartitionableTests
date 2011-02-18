@@ -62,7 +62,7 @@ struct Coloring {
 				if(color == -1) { // that's OK, this node is still, as expected, uncolored
 				} else {
 					// AHA. We must color this community and restart
-					PP3(maybeColored, n, color);
+					// PP3(maybeColored, n, color);
 					this->colorOneComm(maybeColored, color);
 					return 1+this->fixMiscolorings();
 				}
@@ -80,40 +80,45 @@ struct Coloring {
 		if(uncoloredCommunities.empty())
 			return -1; // all done!
 		const int seedComm = *uncoloredCommunities.begin();
-		PP2(seedComm, newColor);
+		// PP2(seedComm, newColor);
 
 		this->colorOneComm(seedComm, newColor);
 		const int newlyColored = 1+this->fixMiscolorings();
-		PP(newlyColored);
+		// PP(newlyColored);
 
 		++componentsSoFar;
 		return newColor;
 	}
 };
 
-void doExperiments(const int N, const int S, const int C) {
-	const RandomCommunityAssignment rca(N,S,C);
-	PP(rca.commsPerNodeAvg());
-	PP(rca.numOrphanNodes());
-	cout << endl;
-
-	Coloring col(&rca);
-	while(!col.uncoloredCommunities.empty()) {
-		col.percolateAnotherComponent();
+void doExperiments(const int N, const int S, const int C, const int iterations) {
+	for(int iteration=0; iteration< iterations; iteration++) {
+		PP(iteration);
+		const RandomCommunityAssignment rca(N,S,C);
+		PP(rca.commsPerNodeAvg());
+		PP(rca.numOrphanNodes());
+		// cout << endl;
+	
+		Coloring col(&rca);
+		while(!col.uncoloredCommunities.empty()) {
+			col.percolateAnotherComponent();
+		}
+		PP(col.componentsSoFar);
+		PP2(rca.numOrphanNodes(),col.componentsSoFar);
 	}
-	PP(col.componentsSoFar);
 }
 
 struct UsageMessage{};
 
 int main(int argc, char **argv) {
-	unless(argc==4) {
+	unless(argc==5) {
 		throw UsageMessage();
 	}
 	const int N = atoi(argv[1]);
 	const int S = atoi(argv[2]);
 	const int C = atoi(argv[3]);
-	PP3(N,S,C);
+	const int iterations = atoi(argv[4]);
+	PP4(N,S,C,iterations);
 
-	doExperiments(N,S,C);
+	doExperiments(N,S,C, iterations);
 }
