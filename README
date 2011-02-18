@@ -1,6 +1,14 @@
-Aaron McDaid and others aaronmcdaid@gmail.com
+https://github.com/aaronmcdaid/PartitionableTests
 
-This is a private web page for our work at Clique, UCD
-http://clique.ucd.ie/wiki/index.php/Are_real_networks_partitionable%3F
+  cd code
+  make NSC
+  cd ../simulations
+  make  # to see a sample run
 
-Funded by SFI ...
+The binary (code/NSC) just sends its result to stdout.
+Run it without parameters for usage instructions.
+In the 'simulations' folder, I have a makefile to run the software and process the results into a suitable tab-delimited text file.
+
+
+This is a private web page for our work at Clique, UCD:
+  http://clique.ucd.ie/wiki/index.php/Are_real_networks_partitionable%3F
